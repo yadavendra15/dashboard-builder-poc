@@ -12,6 +12,7 @@ import SlicedChart from './Components/SlicedChart';
 import DonutChart from './Components/DonutChart';
 import XYLineChart from './Components/XYLineChart';
 import TableWidget from "./Components/TableWidget";
+import CardWidget from "./Components/CardWidget";
 // import DataTable from "./Components/DataTable";
 function App() {
 
@@ -60,22 +61,27 @@ function App() {
             <option value='DonutChart'>Donut Chart</option>
             <option value='XYLineChart'>Line Chart</option>
             <option value='DataTable'>Data Table</option>
+            <option value='CardWidget'>Card Widget</option>
           </select>
         </div>
         <div>
           <label>Data to be shown : </label>
           <select id="dynamicChartData" ref={apiSelectBox}>
             <option value=''>--Select API--</option>
-            {chartType !== 'DataTable' ?
+            {(chartType !== 'DataTable' && chartType !== "CardWidget") &&
               <>
                 <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/chartData2">Product Price Data</option>
                 <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/chartData">Country Litre Data</option>
               </>
-              :
+            }
+            {chartType === 'DataTable' && chartType !== 'CardWidget' &&
               <>
                 <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/tablesData">User Details 40 rows</option>
                 <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/tablesData2">User Details 99rows</option>
               </>
+            } {
+              chartType === 'CardWidget' &&
+              <option value="http://demo4489656.mockable.io/cardData">Card Widget Data</option>
             }
           </select>
         </div>
@@ -91,6 +97,7 @@ function App() {
       {chartType === 'DonutChart' && <DonutChart data={chartData} />}
       {chartType === 'XYLineChart' && <XYLineChart data={chartData} />}
       {chartType === 'DataTable' && <TableWidget data={chartData} />}
+      {chartType === 'CardWidget' && <CardWidget data={chartData} />}
     </div>
   );
 }
