@@ -70,18 +70,19 @@ function App() {
             <option value=''>--Select API--</option>
             {(chartType !== 'DataTable' && chartType !== "CardWidget") &&
               <>
-                <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/chartData2">Product Price Data</option>
-                <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/chartData">Country Litre Data</option>
+                <option value="https://app-simulator.apps83.com/productData">Product Price Data</option>
+                <option value="https://app-simulator.apps83.com/countryData">Country Litre Data</option>
               </>
             }
             {chartType === 'DataTable' && chartType !== 'CardWidget' &&
               <>
-                <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/tablesData">User Details 40 rows</option>
-                <option value="https://625516ca19bc53e23484f66d.mockapi.io/api/v1/tablesData2">User Details 99rows</option>
+                <option value="https://app-simulator.apps83.com/usersData">User Details 40 records</option>
+                <option value="https://app-simulator.apps83.com/otherUsersData">User Details 99 records</option>
               </>
-            } {
+            }
+            {
               chartType === 'CardWidget' &&
-              <option value="http://demo4489656.mockable.io/cardData">Card Widget Data</option>
+              <option value="https://app-simulator.apps83.com/cardWidgetData">Card Widget Data</option>
             }
           </select>
         </div>

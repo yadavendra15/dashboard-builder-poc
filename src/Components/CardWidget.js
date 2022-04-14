@@ -6,8 +6,8 @@ function CardWidget({ data }) {
         <div className="container">
             <div className="row">
                 {
-                    data && (data.length > 0 &&
-                    data.map(function(el, index) {
+                    data && (data.data.length > 0 &&
+                    data.data.map(function(el, index) {
                         return (<div key={index} className="col-md-3">
                                 <div className="card-counter">
                                     {/* <i class="fa fa-code-fork"></i> */}
