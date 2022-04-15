@@ -41,7 +41,7 @@ function HalfCirclePie({ data }) {
         series.hiddenState.properties.startAngle = 90;
         series.hiddenState.properties.endAngle = 90;
 
-        chart.legend = new am4charts.Legend();
+        // chart.legend = new am4charts.Legend();
 
         return () => {
             chart.dispose();
