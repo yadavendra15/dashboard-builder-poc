@@ -4,9 +4,26 @@ import { WidthProvider, Responsive } from "react-grid-layout";
 import { cloneDeep, isEqual } from 'lodash';
 import PieChart from '../Components/PieChart';
 import HalfCirclePie from '../Components/HalfCirclePie';
+import VariableRadiusPieChart from '../Components/VariableRadiusPieChart';
+import PieChart3D from '../Components/PieChart3D';
+import XYBarChart from '../Components/XYBarChart';
+import SlicedChart from '../Components/SlicedChart';
+import DonutChart from '../Components/DonutChart';
+import XYLineChart from '../Components/XYLineChart';
+import TableWidget from '../Components/TableWidget';
+import CardWidget from '../Components/CardWidget';
+import DraggablePieChart from '../Components/DraggablePieChart';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Dashboard() {
+
+
+    //           <option value='XYBarChart'>XY Bar Chart</option>
+    //           <option value='SlicedChart'>Sliced Funnel Chart</option>
+    //           <option value='DonutChart'>Donut Chart</option>
+    //           <option value='XYLineChart'>Line Chart</option>
+    //           <option value='TableWidget'>Data Table</option>
+    //           <option value='CardWidget'>Card Widget</option>
 
     const getWidgets = (widget, data) => {
         switch (widget) {
@@ -14,37 +31,42 @@ function Dashboard() {
                 return <div key={widget} data-grid={{ x: 0, y: 0, w: 5, h: 2 }}><PieChart data={data} /></div>
             case "HalfCirclePie":
                 return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><HalfCirclePie data={data} /></div>
+            case "VariableRadiusPieChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><VariableRadiusPieChart data={data} /></div>
+            case "DraggablePieChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><DraggablePieChart data={data} /></div>
+            case "PieChart3D":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><PieChart3D data={data} /></div>
+            case "XYBarChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><XYBarChart data={data} /></div>
+            case "SlicedChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><SlicedChart data={data} /></div>
+            case "DonutChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><DonutChart data={data} /></div>
+            case "XYLineChart":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><XYLineChart data={data} /></div>
+            case "TableWidget":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><TableWidget data={data} /></div>
+            case "CardWidget":
+                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><CardWidget data={data} /></div>
         }
-
-
     }
-    const layout = [
-        { i: "PieChart", x: 0, y: 0, w: 40, h: 30 },
-        { i: "HalfCirclePie", x: 1, y: 0, w: 40, h: 30 }
-    ];
+    let savedData = JSON.parse(localStorage.getItem("savedConfig"));
+    if(!savedData) {
+        savedData = [];
+    }
     return (
         <>
             <div>Dashboard</div>
             <Link to="/add-widget">Add a New Widget</Link>
 
             <ResponsiveReactGridLayout width={1200}
-                // layout={layout}
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                 cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
             >
                 {
-                    cloneDeep([
-                        {
-                            widget: 'PieChart',
-                            data: { "category": "country", "value": "litres", "data": [{ "country": "Avon", "litres": 74919, "id": "1" }, { "country": "Berkshire", "litres": 34382, "id": "2" }, { "country": "Buckinghamshire", "litres": 94658, "id": "3" }, { "country": "Berkshire", "litres": 62189, "id": "4" }, { "country": "Avon", "litres": 67600, "id": "5" }, { "country": "Berkshire", "litres": 48585, "id": "6" }, { "country": "Avon", "litres": 20726, "id": "7" }, { "country": "Borders", "litres": 55437, "id": "8" }, { "country": "Bedfordshire", "litres": 54100, "id": "9" }, { "country": "Bedfordshire", "litres": 60326, "id": "10" }, { "country": "Buckinghamshire", "litres": 54010, "id": "11" }, { "country": "Borders", "litres": 88730, "id": "12" }, { "country": "Borders", "litres": 43059, "id": "13" }, { "country": "Borders", "litres": 42245, "id": "14" }, { "country": "Bedfordshire", "litres": 34979, "id": "15" }] },
-                            url: "productData"
-                        },
-                        {
-                            widget: 'HalfCirclePie',
-                            data: { "category": "country", "value": "litres", "data": [{ "country": "Avon", "litres": 74919, "id": "1" }, { "country": "Berkshire", "litres": 34382, "id": "2" }, { "country": "Buckinghamshire", "litres": 94658, "id": "3" }, { "country": "Berkshire", "litres": 62189, "id": "4" }, { "country": "Avon", "litres": 67600, "id": "5" }, { "country": "Berkshire", "litres": 48585, "id": "6" }, { "country": "Avon", "litres": 20726, "id": "7" }, { "country": "Borders", "litres": 55437, "id": "8" }, { "country": "Bedfordshire", "litres": 54100, "id": "9" }, { "country": "Bedfordshire", "litres": 60326, "id": "10" }, { "country": "Buckinghamshire", "litres": 54010, "id": "11" }, { "country": "Borders", "litres": 88730, "id": "12" }, { "country": "Borders", "litres": 43059, "id": "13" }, { "country": "Borders", "litres": 42245, "id": "14" }, { "country": "Bedfordshire", "litres": 34979, "id": "15" }] },
-                            url: "currencyData"
-                        }
-                    ]).map((component) => {
+                    
+                    cloneDeep(savedData).map((component) => {
                         return getWidgets(component.widget, component.data)
                     })
                 }
