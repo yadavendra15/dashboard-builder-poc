@@ -46,6 +46,28 @@ function App() {
   const apiSelectBox = useRef()
   const chartTypeBox = useRef()
 
+  const saveConfig = () => {
+    const { value } = chartData;
+    let savedData = JSON.parse(localStorage.getItem("savedConfig"));
+    if (!!savedData) {
+      savedData = { ...savedData, [`${value}+${chartType}`]: chartData };
+      localStorage.setItem("savedConfig", JSON.stringify(savedData));
+    }
+    if (!savedData) {
+      localStorage.setItem("savedConfig", JSON.stringify({ [`${value}+${chartType}`]: chartData }));
+    }
+  }
+
+  const showConfig = () => {
+    let savedData = JSON.parse(localStorage.getItem("savedConfig"));
+    let savedtype = {};
+    Object.keys(savedData).map((key) => {
+      let typeArr = key.split('+');
+      savedtype = { ...savedtype, [typeArr[0]]: savedtype[typeArr[0]] ? [savedtype[typeArr[0]], typeArr[1]] : typeArr[1] };
+    })
+    console.log(savedtype);
+  }
+
   return (
     <>
       <div className="App">
@@ -114,6 +136,12 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </BrowserRouter>
+        <div className="options">
+          <button onClick={saveConfig}>Save Configuration</button>
+        </div>
+        <div className="options">
+          <button onClick={showConfig}>Display Saved Config</button>
+        </div>
       </div>
     </>
   );
