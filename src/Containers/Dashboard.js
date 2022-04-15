@@ -17,14 +17,6 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Dashboard() {
 
-
-    //           <option value='XYBarChart'>XY Bar Chart</option>
-    //           <option value='SlicedChart'>Sliced Funnel Chart</option>
-    //           <option value='DonutChart'>Donut Chart</option>
-    //           <option value='XYLineChart'>Line Chart</option>
-    //           <option value='TableWidget'>Data Table</option>
-    //           <option value='CardWidget'>Card Widget</option>
-
     const getWidgets = (widget, data) => {
         switch (widget) {
             case "PieChart":
@@ -63,6 +55,8 @@ function Dashboard() {
             <ResponsiveReactGridLayout width={1200}
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                 cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
+                // rowHeight={150}
+                preventCollision={true}
             >
                 {
                     
