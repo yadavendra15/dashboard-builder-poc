@@ -47,36 +47,38 @@ function App() {
   return (
     <div className="App">
       <div className="options-wrapper">
-        <div>
+        <div className="options">
           <label>Widget Type : </label>
           <select id="chart-type" ref={chartTypeBox}>
             <option value=''>--Select Chart Type--</option>
-            <option value='SimplePie'>Simple Pie Chart</option>
+            <option value='PieChart'>Simple Pie Chart</option>
             <option value='HalfCirclePie'>Half Circle Pie Chart</option>
-            <option value='VariableRadiusPie'>Variable Radius Pie Chart</option>
-            <option value='DraggablePie'>Draggable Pie Chart</option>
-            <option value='3DPieChart'>3D Pie Chart</option>
+            <option value='VariableRadiusPieChart'>Variable Radius Pie Chart</option>
+            <option value='DraggablePieChart'>Draggable Pie Chart</option>
+            <option value='PieChart3D'>3D Pie Chart</option>
             <option value='XYBarChart'>XY Bar Chart</option>
             <option value='SlicedChart'>Sliced Funnel Chart</option>
             <option value='DonutChart'>Donut Chart</option>
             <option value='XYLineChart'>Line Chart</option>
-            <option value='DataTable'>Data Table</option>
+            <option value='TableWidget'>Data Table</option>
             <option value='CardWidget'>Card Widget</option>
           </select>
         </div>
-        <div>
+        <div className="options">
           <label>Data to be shown : </label>
           <select id="dynamicChartData" ref={apiSelectBox}>
             <option value=''>--Select API--</option>
-            {(chartType !== 'DataTable' && chartType !== "CardWidget") &&
+            {(chartType !== 'TableWidget' && chartType !== "CardWidget") &&
               <>
                 <option value="https://app-simulator.apps83.com/productData">Product Price Data</option>
                 <option value="https://app-simulator.apps83.com/countryData">Country Litre Data</option>
+                <option value="https://app-simulator.apps83.com/currencyData">Currency Amount Data</option>
               </>
             }
-            {chartType === 'DataTable' && chartType !== 'CardWidget' &&
+            {chartType === 'TableWidget' && chartType !== 'CardWidget' &&
               <>
                 <option value="https://app-simulator.apps83.com/usersData">User Details 40 records</option>
+                <option value="https://app-simulator.apps83.com/cityData">City Details records</option>
                 <option value="https://app-simulator.apps83.com/otherUsersData">User Details 99 records</option>
               </>
             }
@@ -86,18 +88,22 @@ function App() {
             }
           </select>
         </div>
+
+        <div className="options">
+          <button>Save Configuration</button>
+        </div>
       </div>
 
-      {chartType === 'SimplePie' && <PieChart data={chartData} />}
+      {chartType === 'PieChart' && <PieChart data={chartData} />}
       {chartType === 'HalfCirclePie' && <HalfCirclePie data={chartData} />}
-      {chartType === 'VariableRadiusPie' && <VariableRadiusPieChart data={chartData} />}
+      {chartType === 'VariableRadiusPieChart' && <VariableRadiusPieChart data={chartData} />}
       {chartType === 'XYBarChart' && <XYBarChart data={chartData} />}
-      {chartType === 'DraggablePie' && <DraggablePieChart data={chartData} />}
-      {chartType === '3DPieChart' && <PieChart3D data={chartData} />}
+      {chartType === 'DraggablePieChart' && <DraggablePieChart data={chartData} />}
+      {chartType === 'PieChart3D' && <PieChart3D data={chartData} />}
       {chartType === 'SlicedChart' && <SlicedChart data={chartData} />}
       {chartType === 'DonutChart' && <DonutChart data={chartData} />}
       {chartType === 'XYLineChart' && <XYLineChart data={chartData} />}
-      {chartType === 'DataTable' && <TableWidget data={chartData} />}
+      {chartType === 'TableWidget' && <TableWidget data={chartData} />}
       {chartType === 'CardWidget' && <CardWidget data={chartData} />}
     </div>
   );
