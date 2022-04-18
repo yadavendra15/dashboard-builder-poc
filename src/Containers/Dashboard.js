@@ -13,11 +13,13 @@ import XYLineChart from '../Components/XYLineChart';
 import TableWidget from '../Components/TableWidget';
 import CardWidget from '../Components/CardWidget';
 import DraggablePieChart from '../Components/DraggablePieChart';
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 function Dashboard() {
-
-    const getWidgets = (widget, data) => {
+    var tableCount = 0;
+    const getWidgets = (widget, data, action) => {
         switch (widget) {
             case "PieChart":
                 return <div key={widget} data-grid={{ x: 0, y: 0, w: 5, h: 2 }}><PieChart data={data} /></div>
@@ -38,13 +40,14 @@ function Dashboard() {
             case "XYLineChart":
                 return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><XYLineChart data={data} /></div>
             case "TableWidget":
-                return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><TableWidget data={data} /></div>
+                tableCount++;
+                return <div key={`${widget}-${tableCount}`} data-grid={{ x: 0, y: 1, w: 10, h: 2 }}><TableWidget data={data} action={action} /></div>
             case "CardWidget":
                 return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><CardWidget data={data} /></div>
         }
     }
     let savedData = JSON.parse(localStorage.getItem("savedConfig"));
-    if(!savedData) {
+    if (!savedData) {
         savedData = [];
     }
     return (
@@ -55,13 +58,12 @@ function Dashboard() {
             <ResponsiveReactGridLayout width={1200}
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                 cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
-                // rowHeight={150}
                 preventCollision={true}
             >
                 {
-                    
+
                     cloneDeep(savedData).map((component) => {
-                        return getWidgets(component.widget, component.data)
+                        return getWidgets(component.widget, component.data, component.action)
                     })
                 }
             </ResponsiveReactGridLayout>

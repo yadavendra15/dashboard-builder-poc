@@ -15,8 +15,8 @@ import XYLineChart from '../Components/XYLineChart';
 
 function AddWidget() {
 
-    const [chartData, setChartData] = useState();
-    const [chartType, setChartType] = useState();
+    const [widgetData, setWidgetData] = useState();
+    const [widgetType, setChartType] = useState();
 
     useEffect(() => {
         am4core.options.autoDispose = true;
@@ -24,34 +24,57 @@ function AddWidget() {
         function onChangeDataHandler(e) {
             fetch(apiSelectBox.current.value)
                 .then(response => response.json())
-                .then(data => setChartData(data));
+                .then(data => setWidgetData(data));
         }
 
-        chartTypeBox.current.addEventListener("change", onChangeChartTypeHandler);
+        widgetTypeBox.current.addEventListener("change", onChangeChartTypeHandler);
         function onChangeChartTypeHandler(e) {
-            setChartData(undefined)
+            setWidgetData(undefined)
             apiSelectBox.current.value = '';
-            setChartType(chartTypeBox.current.value);
+            setChartType(widgetTypeBox.current.value);
         }
 
     }, [])
 
     useEffect(() => {
-        // console.log(chartData, chartType)
-    }, [chartData, chartType])
+        // console.log(widgetData, widgetType)
+    }, [widgetData, widgetType])
 
     const apiSelectBox = useRef()
-    const chartTypeBox = useRef()
+    const widgetTypeBox = useRef()
+
+
+    // for the table widgets
+    const [selectedColumn, setSelectedColumn] = useState();
+    const [routeURL, setRouteURL] = useState();
+    const actionSelected = (e) => {
+        setSelectedColumn(e.target.value)
+    }
+    const changeRouteURL = (e) => {
+        setRouteURL(e.target.value)
+    }
 
     const saveConfig = () => {
-        const { value } = chartData;
-        let savedData = JSON.parse(localStorage.getItem("savedConfig"));
-        if (!!savedData) {
-            savedData = [...savedData, { widget: chartType, data: chartData }];
-            localStorage.setItem("savedConfig", JSON.stringify(savedData));
+        const { value } = widgetData;
+        let widgetConfig;
+        widgetConfig = JSON.parse(localStorage.getItem("savedConfig"));
+        if (!!widgetConfig) {
+            if (widgetType === 'TableWidget') {
+                widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
+            }
+            else {
+                widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData }];
+            }
+            localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
         }
-        if (!savedData) {
-            localStorage.setItem("savedConfig", JSON.stringify([{ widget: chartType, data: chartData }]));
+        if (!widgetConfig) {
+            if(widgetType === 'TableWidget') {
+                widgetConfig = [{ widget: widgetType, data: widgetData, action: {column: selectedColumn, url: routeURL} }]
+            }
+            else {
+                widgetConfig = [{ widget: widgetType, data: widgetData }]
+            }
+            localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
         }
     }
 
@@ -61,8 +84,8 @@ function AddWidget() {
         <div className="options-wrapper">
             <div className="options">
                 <label>Widget Type : </label>
-                <select id="chart-type" ref={chartTypeBox}>
-                    <option value=''>--Select Chart Type--</option>
+                <select id="chart-type" ref={widgetTypeBox}>
+                    <option value=''>--Select Widget Type--</option>
                     <option value='PieChart'>Simple Pie Chart</option>
                     <option value='HalfCirclePie'>Half Circle Pie Chart</option>
                     <option value='VariableRadiusPieChart'>Variable Radius Pie Chart</option>
@@ -78,16 +101,16 @@ function AddWidget() {
             </div>
             <div className="options">
                 <label>Data to be shown : </label>
-                <select id="dynamicChartData" ref={apiSelectBox}>
+                <select id="dynamicWidgetData" ref={apiSelectBox}>
                     <option value=''>--Select API--</option>
-                    {(chartType !== 'TableWidget' && chartType !== "CardWidget") &&
+                    {(widgetType !== 'TableWidget' && widgetType !== "CardWidget") &&
                         <>
                             <option value="https://app-simulator.apps83.com/productData">Product Price Data</option>
                             <option value="https://app-simulator.apps83.com/countryData">Country Litre Data</option>
                             <option value="https://app-simulator.apps83.com/currencyData">Currency Amount Data</option>
                         </>
                     }
-                    {chartType === 'TableWidget' && chartType !== 'CardWidget' &&
+                    {widgetType === 'TableWidget' && widgetType !== 'CardWidget' &&
                         <>
                             <option value="https://app-simulator.apps83.com/usersData">User Details 40 records</option>
                             <option value="https://app-simulator.apps83.com/cityData">City Details records</option>
@@ -95,7 +118,7 @@ function AddWidget() {
                         </>
                     }
                     {
-                        chartType === 'CardWidget' &&
+                        widgetType === 'CardWidget' &&
                         <option value="https://app-simulator.apps83.com/cardWidgetData">Card Widget Data</option>
                     }
                 </select>
@@ -105,17 +128,17 @@ function AddWidget() {
             </div>
         </div>
 
-        {chartType === 'PieChart' && <PieChart data={chartData} />}
-        {chartType === 'HalfCirclePie' && <HalfCirclePie data={chartData} />}
-        {chartType === 'VariableRadiusPieChart' && <VariableRadiusPieChart data={chartData} />}
-        {chartType === 'XYBarChart' && <XYBarChart data={chartData} />}
-        {chartType === 'DraggablePieChart' && <DraggablePieChart data={chartData} />}
-        {chartType === 'PieChart3D' && <PieChart3D data={chartData} />}
-        {chartType === 'SlicedChart' && <SlicedChart data={chartData} />}
-        {chartType === 'DonutChart' && <DonutChart data={chartData} />}
-        {chartType === 'XYLineChart' && <XYLineChart data={chartData} />}
-        {chartType === 'TableWidget' && <TableWidget data={chartData} />}
-        {chartType === 'CardWidget' && <CardWidget data={chartData} />}
+        {widgetType === 'PieChart' && <PieChart data={widgetData} />}
+        {widgetType === 'HalfCirclePie' && <HalfCirclePie data={widgetData} />}
+        {widgetType === 'VariableRadiusPieChart' && <VariableRadiusPieChart data={widgetData} />}
+        {widgetType === 'XYBarChart' && <XYBarChart data={widgetData} />}
+        {widgetType === 'DraggablePieChart' && <DraggablePieChart data={widgetData} />}
+        {widgetType === 'PieChart3D' && <PieChart3D data={widgetData} />}
+        {widgetType === 'SlicedChart' && <SlicedChart data={widgetData} />}
+        {widgetType === 'DonutChart' && <DonutChart data={widgetData} />}
+        {widgetType === 'XYLineChart' && <XYLineChart data={widgetData} />}
+        {widgetType === 'TableWidget' && <TableWidget data={widgetData} selectedColumn={selectedColumn} actionSelected={(e) => actionSelected(e)} changeRouteURL={(e) => changeRouteURL(e)} />}
+        {widgetType === 'CardWidget' && <CardWidget data={widgetData} />}
     </>
     )
 }
