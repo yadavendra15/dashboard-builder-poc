@@ -22,13 +22,13 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 function Dashboard({ dashboardConfig, type }) {
 
     const params = useParams();
-    const[path,setPath]=useState('');
+    const pathkey=window.location.pathname.split('/')[1]||'layout';
+    const[path,setPath]=useState(pathkey);
    // console.log(params,layout,'layout cnsl')
 
     if (!dashboardConfig) {
         dashboardConfig = [];
     }
-    useEffect(()=>{setPath(window.location.pathname)},[])
 
     const getWidgets = (widget, data, action) => {
        let ctype=widget.split('/')[0];
@@ -59,7 +59,7 @@ function Dashboard({ dashboardConfig, type }) {
     }
 
     const onLayoutChange=(currlayout)=>{
-        localStorage.setItem(`${path}- layout`,JSON.stringify(currlayout));      
+        localStorage.setItem(`${path}-layout`,JSON.stringify(currlayout));      
     }
 
     function getLayout(key){
