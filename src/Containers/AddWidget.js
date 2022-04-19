@@ -63,7 +63,7 @@ function AddWidget({ type }) {
                     widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
                 }
                 else {
-                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData }];
+                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: {} }];
                 }
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
@@ -72,7 +72,7 @@ function AddWidget({ type }) {
                     widgetConfig = [{ widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }]
                 }
                 else {
-                    widgetConfig = [{ widget: widgetType, data: widgetData }]
+                    widgetConfig = [{ widget: widgetType, data: widgetData, action: {} }]
                 }
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }

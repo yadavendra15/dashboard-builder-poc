@@ -61,7 +61,7 @@ function TableWidget(props) {
                 className="customReactTable ongoing-table"
                 showPaginationBottom={true}
                 defaultPageSize={10}
-                getTrProps={getTrProp}
+                getTrProps={action && action.url && getTrProp}
             />
         </>
     )
