@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function HalfCirclePie({ data }) {
+function HalfCirclePie({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -16,7 +16,7 @@ function HalfCirclePie({ data }) {
     const halfCirclePie = () => {
         am4core.useTheme(am4themes_animated);
         // Create chart instance
-        let chart = am4core.create("half-circle-pie", am4charts.PieChart);
+        let chart = am4core.create(chartid, am4charts.PieChart);
 
         // Add data
         chart.data = data.data
@@ -49,7 +49,7 @@ function HalfCirclePie({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="half-circle-pie"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

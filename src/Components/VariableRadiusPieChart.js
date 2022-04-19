@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function VariableRadiusPie({ data }) {
+function VariableRadiusPie({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function VariableRadiusPie({ data }) {
 
         am4core.useTheme(am4themes_animated);
 
-        var chart = am4core.create("variable-radius-pie", am4charts.PieChart);
+        var chart = am4core.create(chartid, am4charts.PieChart);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
         chart.data = data.data
@@ -39,7 +39,7 @@ function VariableRadiusPie({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="variable-radius-pie"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

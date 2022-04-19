@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function PieChart({ data }) {
+function PieChart({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -16,7 +16,7 @@ function PieChart({ data }) {
     const pieChart = () => {
         am4core.useTheme(am4themes_animated);
         // Create chart instance
-        let chart = am4core.create("chartdiv", am4charts.PieChart);
+        let chart = am4core.create(chartid, am4charts.PieChart);
 
         // Add data
         chart.data = data.data
@@ -27,7 +27,7 @@ function PieChart({ data }) {
         pieSeries.dataFields.category = data.category;
     }
 
-    return <div className="chart-wrapper" id="chartdiv"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

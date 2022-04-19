@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function XYLineChart({ data }) {
+function XYLineChart({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function XYLineChart({ data }) {
         am4core.useTheme(am4themes_animated);
 
         // Create chart instance
-        var chart = am4core.create("line-chart", am4charts.XYChart);
+        var chart = am4core.create(chartid, am4charts.XYChart);
         chart.paddingRight = 20;
 
         // Add data
@@ -71,7 +71,7 @@ function XYLineChart({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="line-chart"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

@@ -5,7 +5,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_kelly from "@amcharts/amcharts4/themes/kelly";
 
-function XYBarChart({ data }) {
+function XYBarChart({ data ,chartid}) {
     // console.log(data)
 
     useEffect(() => {
@@ -20,7 +20,7 @@ function XYBarChart({ data }) {
         am4core.useTheme(am4themes_kelly);
 
         // Create chart instance
-        var chart = am4core.create("xy-bar-chart", am4charts.XYChart);
+        var chart = am4core.create(chartid, am4charts.XYChart);
 
         chart.marginRight = 400;
 
@@ -77,7 +77,7 @@ function XYBarChart({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="xy-bar-chart"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

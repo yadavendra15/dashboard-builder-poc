@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function DonutChart({ data }) {
+function DonutChart({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -16,7 +16,7 @@ function DonutChart({ data }) {
     const donutChart = () => {
         am4core.useTheme(am4themes_animated);
         // Create chart instance
-        let chart = am4core.create("donut-chart", am4charts.PieChart);
+        let chart = am4core.create(chartid, am4charts.PieChart);
 
         // Add data
         chart.data = data.data
@@ -44,7 +44,7 @@ function DonutChart({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="donut-chart"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

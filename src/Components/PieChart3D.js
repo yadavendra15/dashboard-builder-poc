@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function PieChart3D({ data }) {
+function PieChart3D({ data ,chartid}) {
     // console.log(data)
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function PieChart3D({ data }) {
 
         am4core.useTheme(am4themes_animated);
 
-        var chart = am4core.create("pie-3d", am4charts.PieChart3D);
+        var chart = am4core.create(chartid, am4charts.PieChart3D);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
         chart.data = data.data;
@@ -41,7 +41,7 @@ function PieChart3D({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="pie-3d"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

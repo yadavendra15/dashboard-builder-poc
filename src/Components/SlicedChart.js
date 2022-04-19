@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function SlicedChart({ data }) {
+function SlicedChart({ data,chartid }) {
     // console.log(data)
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function SlicedChart({ data }) {
 
         am4core.useTheme(am4themes_animated);
 
-        let chart = am4core.create("sliced-chart", am4charts.SlicedChart);
+        let chart = am4core.create(chartid, am4charts.SlicedChart);
         chart.data = data.data
 
         let series = chart.series.push(new am4charts.FunnelSeries());
@@ -32,7 +32,7 @@ function SlicedChart({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="sliced-chart"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

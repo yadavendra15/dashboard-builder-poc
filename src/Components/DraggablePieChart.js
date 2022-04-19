@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function DraggablePieChart({ data }) {
+function DraggablePieChart({ data ,chartid}) {
     // console.log(data)
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function DraggablePieChart({ data }) {
         widgetData[0][data.value] = 1000;
 
         // cointainer to hold both charts
-        var chart = am4core.create("draggable-pie", am4core.Container);
+        var chart = am4core.create(chartid, am4core.Container);
         chart.width = am4core.percent(100);
         chart.height = am4core.percent(100);
         chart.layout = "horizontal";
@@ -237,7 +237,7 @@ function DraggablePieChart({ data }) {
 
     }
 
-    return <div className="chart-wrapper" id="draggable-pie"></div>;
+    return <div className="chart-wrapper" id={chartid}></div>;
 
 }
 

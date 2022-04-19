@@ -12,6 +12,7 @@ import TableWidget from '../Components/TableWidget';
 import VariableRadiusPieChart from '../Components/VariableRadiusPieChart';
 import XYBarChart from '../Components/XYBarChart';
 import XYLineChart from '../Components/XYLineChart';
+import { v4 as uid } from 'uuid';
 
 function AddWidget({ type }) {
 
@@ -60,19 +61,23 @@ function AddWidget({ type }) {
         if (type === 'main') {
             if (!!widgetConfig) {
                 if (widgetType === 'TableWidget') {
-                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
+                    let id=uid();
+                    widgetConfig = [...widgetConfig, { widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
                 }
                 else {
-                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: {} }];
+                    let id=uid();
+                    widgetConfig = [...widgetConfig, { widget: `${widgetType}/${id}`, data: widgetData, action: {} }];
                 }
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
             if (!widgetConfig) {
                 if (widgetType === 'TableWidget') {
-                    widgetConfig = [{ widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }]
+                    let id=uid();
+                    widgetConfig = [{ widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL } }]
                 }
                 else {
-                    widgetConfig = [{ widget: widgetType, data: widgetData, action: {} }]
+                    let id=uid();
+                    widgetConfig = [{ widget: `${widgetType}/${id}`, data: widgetData, action: {} }]
                 }
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
@@ -143,15 +148,15 @@ function AddWidget({ type }) {
             </div>
         </div>
 
-        {widgetType === 'PieChart' && <PieChart data={widgetData} />}
-        {widgetType === 'HalfCirclePie' && <HalfCirclePie data={widgetData} />}
-        {widgetType === 'VariableRadiusPieChart' && <VariableRadiusPieChart data={widgetData} />}
-        {widgetType === 'XYBarChart' && <XYBarChart data={widgetData} />}
-        {widgetType === 'DraggablePieChart' && <DraggablePieChart data={widgetData} />}
-        {widgetType === 'PieChart3D' && <PieChart3D data={widgetData} />}
-        {widgetType === 'SlicedChart' && <SlicedChart data={widgetData} />}
-        {widgetType === 'DonutChart' && <DonutChart data={widgetData} />}
-        {widgetType === 'XYLineChart' && <XYLineChart data={widgetData} />}
+        {widgetType === 'PieChart' && <PieChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'HalfCirclePie' && <HalfCirclePie data={widgetData} chartid={uid()} />}
+        {widgetType === 'VariableRadiusPieChart' && <VariableRadiusPieChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'XYBarChart' && <XYBarChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'DraggablePieChart' && <DraggablePieChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'PieChart3D' && <PieChart3D data={widgetData} chartid={uid()} />}
+        {widgetType === 'SlicedChart' && <SlicedChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'DonutChart' && <DonutChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'XYLineChart' && <XYLineChart data={widgetData} chartid={uid()} />}
         {widgetType === 'TableWidget' && <TableWidget data={widgetData} selectedColumn={selectedColumn} actionSelected={(e) => actionSelected(e)} changeRouteURL={(e) => changeRouteURL(e)} />}
         {widgetType === 'CardWidget' && <CardWidget data={widgetData} />}
     </>

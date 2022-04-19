@@ -15,6 +15,7 @@ import CardWidget from '../Components/CardWidget';
 import DraggablePieChart from '../Components/DraggablePieChart';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 let layout=getSavedLayout();
 
@@ -30,28 +31,28 @@ function Dashboard({ dashboardConfig, type }) {
     var tableCount = 0;
 
     const getWidgets = (widget, data, action) => {
-        switch (widget) {
+       let ctype=widget.split('/')[0];
+        switch (ctype) {
             case "PieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><PieChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><PieChart data={data} chartid={widget}/></div>
             case "HalfCirclePie":
-                return <div key={widget} data-grid={getLayout(widget)}><HalfCirclePie data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><HalfCirclePie data={data} chartid={widget} /></div>
             case "VariableRadiusPieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><VariableRadiusPieChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><VariableRadiusPieChart data={data} chartid={widget} /></div>
             case "DraggablePieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><DraggablePieChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><DraggablePieChart data={data} chartid={widget}/></div>
             case "PieChart3D":
-                return <div key={widget} data-grid={getLayout(widget)}><PieChart3D data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><PieChart3D data={data} chartid={widget}/></div>
             case "XYBarChart":
-                return <div key={widget} data-grid={getLayout(widget)}><XYBarChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><XYBarChart data={data} chartid={widget}/></div>
             case "SlicedChart":
-                return <div key={widget} data-grid={getLayout(widget)}><SlicedChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><SlicedChart data={data} chartid={widget}/></div>
             case "DonutChart":
                 return <div key={widget} data-grid={getLayout(widget)}><DonutChart data={data} /></div>
             case "XYLineChart":
-                return <div key={widget} data-grid={getLayout(widget)}><XYLineChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><XYLineChart data={data} chartid={widget}/></div>
             case "TableWidget":
-                tableCount++;
-                return <div key={`${widget}-${tableCount}`} data-grid={getLayout(widget)}><TableWidget data={data} action={action} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><TableWidget data={data} action={action} /></div>
             case "CardWidget":
                 return <div key={widget} data-grid={getLayout(widget)}><CardWidget data={data} /></div>
         }
@@ -63,8 +64,8 @@ function Dashboard({ dashboardConfig, type }) {
 
     function getLayout(key){
         layout=getSavedLayout();
-       let config=layout[key]||{ x: 0, y: 0, w: 5, h: 2 };
-       return config;
+    let config=layout[key]||{ x: 0, y: 0, w: 5, h: 2 };
+    return config;
     }
 
     return (
