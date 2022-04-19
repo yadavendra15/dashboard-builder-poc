@@ -2,7 +2,9 @@
   text-align: center;
 }
 .chart-wrapper {
-  height: 70vh;
+  height: 80%;
+  width:80%;
+  margin:auto;
 }
 .options-wrapper {
   display: flex;
