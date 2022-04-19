@@ -25,8 +25,8 @@ function PieChart3D({ data }) {
         chart.innerRadius = am4core.percent(40);
         chart.depth = 120;
 
-        chart.legend = new am4charts.Legend();
-        chart.legend.position = "right";
+        // chart.legend = new am4charts.Legend();
+        // chart.legend.position = "right";
 
         var series = chart.series.push(new am4charts.PieSeries3D());
         series.dataFields.value = data.value;

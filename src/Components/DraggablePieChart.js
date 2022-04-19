@@ -17,14 +17,14 @@ function DraggablePieChart({ data }) {
 
         am4core.useTheme(am4themes_animated);
 
-        var chartData = [{
+        var widgetData = [{
             "disabled": true,
             "color": am4core.color("#dadada"),
             "opacity": 0.3,
             "strokeDasharray": "4,4"
         }, ...data.data];
-        chartData[0][data.category] = "Dummy";
-        chartData[0][data.value] = 1000;
+        widgetData[0][data.category] = "Dummy";
+        widgetData[0][data.value] = 1000;
 
         // cointainer to hold both charts
         var chart = am4core.create("draggable-pie", am4core.Container);
@@ -41,7 +41,7 @@ function DraggablePieChart({ data }) {
 
         var chart1 = chart.createChild(am4charts.PieChart);
         chart1.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-        chart1.data = chartData;
+        chart1.data = widgetData;
         chart1.radius = am4core.percent(70);
         chart1.innerRadius = am4core.percent(40);
         chart1.zIndex = 1;
@@ -102,7 +102,7 @@ function DraggablePieChart({ data }) {
         chart2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 
         chart2.radius = am4core.percent(70);
-        chart2.data = chartData;
+        chart2.data = widgetData;
         chart2.innerRadius = am4core.percent(40);
         chart2.zIndex = 1;
 
