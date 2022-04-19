@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { WidthProvider, Responsive } from "react-grid-layout";
 import { cloneDeep, isEqual } from 'lodash';
@@ -17,18 +17,18 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-let layout=getSavedLayout();
+//let layout=getSavedLayout();
 
 function Dashboard({ dashboardConfig, type }) {
 
     const params = useParams();
-
+    const[path,setPath]=useState('');
    // console.log(params,layout,'layout cnsl')
 
     if (!dashboardConfig) {
         dashboardConfig = [];
     }
-    var tableCount = 0;
+    useEffect(()=>{setPath(window.location.pathname)},[])
 
     const getWidgets = (widget, data, action) => {
        let ctype=widget.split('/')[0];
@@ -59,11 +59,11 @@ function Dashboard({ dashboardConfig, type }) {
     }
 
     const onLayoutChange=(currlayout)=>{
-        localStorage.setItem("layout",JSON.stringify(currlayout));      
+        localStorage.setItem(`${path}-layout`,JSON.stringify(currlayout));      
     }
 
     function getLayout(key){
-        layout=getSavedLayout();
+       let layout=getSavedLayout(path);
     let config=layout[key]||{ x: 0, y: 0, w: 5, h: 2 };
     return config;
     }
@@ -89,8 +89,8 @@ function Dashboard({ dashboardConfig, type }) {
     )
 }
 
-function getSavedLayout(){
-    let  tmplayout=JSON.parse(localStorage.getItem("layout"));
+function getSavedLayout(pathname){
+    let  tmplayout=JSON.parse(localStorage.getItem(`${pathname}-layout`));
     let obj={};
     if(tmplayout){tmplayout=tmplayout.map(({w,h,x,y,i})=>{
         obj= {...obj,[i]:{w,h,x,y}}
