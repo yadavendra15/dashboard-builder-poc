@@ -59,7 +59,7 @@ function Dashboard({ dashboardConfig, type }) {
     }
 
     const onLayoutChange=(currlayout)=>{
-        localStorage.setItem(`${path}-layout`,JSON.stringify(currlayout));      
+        localStorage.setItem(`${path}- layout`,JSON.stringify(currlayout));      
     }
 
     function getLayout(key){
