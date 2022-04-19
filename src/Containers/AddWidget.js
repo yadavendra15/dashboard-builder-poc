@@ -13,7 +13,7 @@ import VariableRadiusPieChart from '../Components/VariableRadiusPieChart';
 import XYBarChart from '../Components/XYBarChart';
 import XYLineChart from '../Components/XYLineChart';
 
-function AddWidget() {
+function AddWidget({ type }) {
 
     const [widgetData, setWidgetData] = useState();
     const [widgetType, setChartType] = useState();
@@ -55,24 +55,39 @@ function AddWidget() {
     }
 
     const saveConfig = () => {
-        const { value } = widgetData;
         let widgetConfig;
         widgetConfig = JSON.parse(localStorage.getItem("savedConfig"));
-        if (!!widgetConfig) {
-            if (widgetType === 'TableWidget') {
-                widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
+        if (type === 'main') {
+            if (!!widgetConfig) {
+                if (widgetType === 'TableWidget') {
+                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
+                }
+                else {
+                    widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData }];
+                }
+                localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
-            else {
-                widgetConfig = [...widgetConfig, { widget: widgetType, data: widgetData }];
+            if (!widgetConfig) {
+                if (widgetType === 'TableWidget') {
+                    widgetConfig = [{ widget: widgetType, data: widgetData, action: { column: selectedColumn, url: routeURL } }]
+                }
+                else {
+                    widgetConfig = [{ widget: widgetType, data: widgetData }]
+                }
+                localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
-            localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
         }
-        if (!widgetConfig) {
-            if(widgetType === 'TableWidget') {
-                widgetConfig = [{ widget: widgetType, data: widgetData, action: {column: selectedColumn, url: routeURL} }]
+        else if (type === 'drilled-down') {
+            let pathname = window.location.pathname;
+            let pathnameArr = pathname.split('/');
+            let actionUrl = pathnameArr[1];
+            let selectedItemIndex = widgetConfig.findIndex(el => el.action.url === actionUrl);
+            let drilledData = widgetConfig[selectedItemIndex].drilledData
+            if (drilledData) {
+                widgetConfig[selectedItemIndex].drilledData = [...drilledData, { widget: widgetType, data: widgetData }]
             }
             else {
-                widgetConfig = [{ widget: widgetType, data: widgetData }]
+                widgetConfig[selectedItemIndex].drilledData = [{ widget: widgetType, data: widgetData }]
             }
             localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
         }

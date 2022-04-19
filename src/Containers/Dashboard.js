@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { WidthProvider, Responsive } from "react-grid-layout";
 import { cloneDeep, isEqual } from 'lodash';
 import PieChart from '../Components/PieChart';
@@ -17,7 +17,15 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-function Dashboard() {
+function Dashboard({ dashboardConfig, type }) {
+
+    const params = useParams();
+
+    console.log(params)
+
+    if (!dashboardConfig) {
+        dashboardConfig = [];
+    }
     var tableCount = 0;
     const getWidgets = (widget, data, action) => {
         switch (widget) {
@@ -46,23 +54,18 @@ function Dashboard() {
                 return <div key={widget} data-grid={{ x: 0, y: 1, w: 5, h: 2 }}><CardWidget data={data} /></div>
         }
     }
-    let savedData = JSON.parse(localStorage.getItem("savedConfig"));
-    if (!savedData) {
-        savedData = [];
-    }
+
     return (
         <>
             <div>Dashboard</div>
-            <Link to="/add-widget">Add a New Widget</Link>
-
+            {type === 'main' && <Link to="/add-widget">Add a New Widget</Link>}
             <ResponsiveReactGridLayout width={1200}
                 breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
                 cols={{ lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 }}
                 preventCollision={true}
             >
                 {
-
-                    cloneDeep(savedData).map((component) => {
+                    cloneDeep(dashboardConfig).map((component) => {
                         return getWidgets(component.widget, component.data, component.action)
                     })
                 }
