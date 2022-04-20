@@ -5,7 +5,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_kelly from "@amcharts/amcharts4/themes/kelly";
 
-function XYBarChart({ data ,chartid}) {
+function XYBarChart({ data ,chartid, feature}) {
     // console.log(data)
 
     useEffect(() => {
@@ -70,6 +70,14 @@ function XYBarChart({ data ,chartid}) {
 
         // Add cursor
         chart.cursor = new am4charts.XYCursor();
+
+        
+        const getLegend = () => {
+            chart.legend = new am4charts.Legend();
+            chart.legend.position = "right";
+        }
+
+        {feature && feature.legend.show && getLegend()}
 
         return () => {
             chart.dispose();

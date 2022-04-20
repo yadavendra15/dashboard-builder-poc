@@ -15,6 +15,7 @@ import CardWidget from '../Components/CardWidget';
 import DraggablePieChart from '../Components/DraggablePieChart';
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
+import NewBarChart from '../Components/NewBarChart';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 //let layout=getSavedLayout();
@@ -30,31 +31,33 @@ function Dashboard({ dashboardConfig, type }) {
         dashboardConfig = [];
     }
 
-    const getWidgets = (widget, data, action) => {
+    const getWidgets = (widget, data, action, feature) => {
        let ctype=widget.split('/')[0];
         switch (ctype) {
             case "PieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><PieChart data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><PieChart data={data} chartid={widget} feature={feature} /></div>
             case "HalfCirclePie":
-                return <div key={widget} data-grid={getLayout(widget)}><HalfCirclePie data={data} chartid={widget} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><HalfCirclePie data={data} chartid={widget} feature={feature} /></div>
             case "VariableRadiusPieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><VariableRadiusPieChart data={data} chartid={widget} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><VariableRadiusPieChart data={data} chartid={widget} feature={feature} /></div>
             case "DraggablePieChart":
-                return <div key={widget} data-grid={getLayout(widget)}><DraggablePieChart data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><DraggablePieChart data={data} chartid={widget} feature={feature}/></div>
             case "PieChart3D":
-                return <div key={widget} data-grid={getLayout(widget)}><PieChart3D data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><PieChart3D data={data} chartid={widget} feature={feature}/></div>
             case "XYBarChart":
-                return <div key={widget} data-grid={getLayout(widget)}><XYBarChart data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><XYBarChart data={data} chartid={widget} feature={feature}/></div>
             case "SlicedChart":
-                return <div key={widget} data-grid={getLayout(widget)}><SlicedChart data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><SlicedChart data={data} chartid={widget} feature={feature}/></div>
             case "DonutChart":
-                return <div key={widget} data-grid={getLayout(widget)}><DonutChart data={data} /></div>
+                return <div key={widget} data-grid={getLayout(widget)}><DonutChart data={data} chartid={widget} feature={feature} /></div>
             case "XYLineChart":
-                return <div key={widget} data-grid={getLayout(widget)}><XYLineChart data={data} chartid={widget}/></div>
+                return <div key={widget} data-grid={getLayout(widget)}><XYLineChart data={data} chartid={widget} feature={feature}/></div>
             case "TableWidget":
                 return <div key={widget} data-grid={getLayout(widget)}><TableWidget data={data} action={action} /></div>
             case "CardWidget":
                 return <div key={widget} data-grid={getLayout(widget)}><CardWidget data={data} /></div>
+            case "NewBarChart":
+                return <div key={widget} data-grid={getLayout(widget)}><NewBarChart data={data} chartid={widget} /></div>
         }
     }
 
@@ -80,7 +83,7 @@ function Dashboard({ dashboardConfig, type }) {
             >
                 {
                     cloneDeep(dashboardConfig).map((component) => {
-                        return getWidgets(component.widget, component.data, component.action)
+                        return getWidgets(component.widget, component.data, component.action, component.feature)
                     })
                 }
             </ResponsiveReactGridLayout>

@@ -13,11 +13,13 @@ import VariableRadiusPieChart from '../Components/VariableRadiusPieChart';
 import XYBarChart from '../Components/XYBarChart';
 import XYLineChart from '../Components/XYLineChart';
 import { v4 as uid } from 'uuid';
+import NewBarChart from '../Components/NewBarChart';
 
 function AddWidget({ type }) {
 
     const [widgetData, setWidgetData] = useState();
     const [widgetType, setChartType] = useState();
+    const [legend, setLegend] = useState(false);
 
     useEffect(() => {
         am4core.options.autoDispose = true;
@@ -43,6 +45,7 @@ function AddWidget({ type }) {
 
     const apiSelectBox = useRef()
     const widgetTypeBox = useRef()
+    const showLegend = useRef()
 
 
     // for the table widgets
@@ -54,31 +57,26 @@ function AddWidget({ type }) {
     const changeRouteURL = (e) => {
         setRouteURL(e.target.value)
     }
+    const changeLegend = (e) => {
+        setLegend(showLegend.current.checked)
+    }
+
+    useEffect(() => {
+        console.log(legend)
+    }, [legend])
 
     const saveConfig = () => {
         let widgetConfig;
         widgetConfig = JSON.parse(localStorage.getItem("savedConfig"));
         if (type === 'main') {
             if (!!widgetConfig) {
-                if (widgetType === 'TableWidget') {
-                    let id=uid();
-                    widgetConfig = [...widgetConfig, { widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL } }];
-                }
-                else {
-                    let id=uid();
-                    widgetConfig = [...widgetConfig, { widget: `${widgetType}/${id}`, data: widgetData, action: {} }];
-                }
+                let id=uid();
+                widgetConfig = [...widgetConfig, { widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL }, feature: { legend: {show: legend, position: '' } } } ];
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
             if (!widgetConfig) {
-                if (widgetType === 'TableWidget') {
-                    let id=uid();
-                    widgetConfig = [{ widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL } }]
-                }
-                else {
-                    let id=uid();
-                    widgetConfig = [{ widget: `${widgetType}/${id}`, data: widgetData, action: {} }]
-                }
+                let id=uid();
+                widgetConfig = [{ widget: `${widgetType}/${id}`, data: widgetData, action: { column: selectedColumn, url: routeURL }, feature: { legend: {show: legend, position: '' } } }]
                 localStorage.setItem("savedConfig", JSON.stringify(widgetConfig));
             }
         }
@@ -117,6 +115,7 @@ function AddWidget({ type }) {
                     <option value='XYLineChart'>Line Chart</option>
                     <option value='TableWidget'>Data Table</option>
                     <option value='CardWidget'>Card Widget</option>
+                    <option value='NewBarChart'>New Bar Chart</option>
                 </select>
             </div>
             <div className="options">
@@ -143,6 +142,9 @@ function AddWidget({ type }) {
                     }
                 </select>
             </div>
+            <br />
+            {widgetData && <>Show Legend : <input type="checkbox" ref={showLegend} onChange={changeLegend} /></>}
+            <br />
             <div className="options">
                 <button onClick={saveConfig}>Save Configuration</button>
             </div>
@@ -159,6 +161,7 @@ function AddWidget({ type }) {
         {widgetType === 'XYLineChart' && <XYLineChart data={widgetData} chartid={uid()} />}
         {widgetType === 'TableWidget' && <TableWidget data={widgetData} selectedColumn={selectedColumn} actionSelected={(e) => actionSelected(e)} changeRouteURL={(e) => changeRouteURL(e)} />}
         {widgetType === 'CardWidget' && <CardWidget data={widgetData} />}
+        {widgetType === 'NewBarChart' && <NewBarChart data={widgetData} chartid={uid()} />}
     </>
     )
 }

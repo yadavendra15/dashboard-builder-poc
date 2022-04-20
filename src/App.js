@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Dashboard from "./Containers/Dashboard";
 import AddWidget from "./Containers/AddWidget";
+import SciChart from "./Components/SciChart";
 // import DataTable from "./Components/DataTable";
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Routes>
             <Route path="/add-widget" element={<AddWidget type='main' />} />
             <Route path="/dashboard" element={<Dashboard dashboardConfig={dashboardConfig} type='main' />} />
+            <Route path="/sci-chart" element={<SciChart />} />
             <Route path="/" element={<Dashboard dashboardConfig={dashboardConfig} type='main' />} />
             {
               dynamicRoutes &&

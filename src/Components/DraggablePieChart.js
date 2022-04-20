@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function DraggablePieChart({ data ,chartid}) {
+function DraggablePieChart({ data, chartid, feature }) {
     // console.log(data)
 
     useEffect(() => {
@@ -25,6 +25,14 @@ function DraggablePieChart({ data ,chartid}) {
         }, ...data.data];
         widgetData[0][data.category] = "Dummy";
         widgetData[0][data.value] = 1000;
+
+        
+        const getLegend = () => {
+            chart.legend = new am4charts.Legend();
+            chart.legend.position = "right";
+        }
+
+        {feature && feature.legend.show && getLegend()}
 
         // cointainer to hold both charts
         var chart = am4core.create(chartid, am4core.Container);

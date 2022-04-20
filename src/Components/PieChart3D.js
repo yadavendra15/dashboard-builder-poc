@@ -4,7 +4,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-function PieChart3D({ data ,chartid}) {
+function PieChart3D({ data ,chartid, feature}) {
     // console.log(data)
 
     useEffect(() => {
@@ -12,6 +12,8 @@ function PieChart3D({ data ,chartid}) {
             pieChart3D()
         }
     }, [data])
+
+
 
     const pieChart3D = () => {
 
@@ -25,8 +27,12 @@ function PieChart3D({ data ,chartid}) {
         chart.innerRadius = am4core.percent(40);
         chart.depth = 120;
 
-        // chart.legend = new am4charts.Legend();
-        // chart.legend.position = "right";
+        const getLegend = () => {
+            chart.legend = new am4charts.Legend();
+            chart.legend.position = "right";
+        }
+
+        {feature && feature.legend.show && getLegend()}
 
         var series = chart.series.push(new am4charts.PieSeries3D());
         series.dataFields.value = data.value;
