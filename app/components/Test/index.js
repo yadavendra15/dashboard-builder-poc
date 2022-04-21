@@ -14,6 +14,7 @@ import messages from './messages';
 function Test() {
   return (
     <div>
+      Hello World
       <FormattedMessage {...messages.header} />
     </div>
   );
