@@ -26,6 +26,7 @@
     "react-scripts": "5.0.0",
     "react-table": "^6.8.6",
     "redux": "^4.2.0",
+    "redux-first-history": "^5.0.9",
     "redux-saga": "^1.1.3",
     "reselect": "^4.1.5",
     "scichart": "^2.1.2301",
@@ -35,11 +36,10 @@
     "webpack-hot-middleware": "^2.25.1"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development BUILD_VERSION=Local node server",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "generate": "plop --plopfile internals/generators/index.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
