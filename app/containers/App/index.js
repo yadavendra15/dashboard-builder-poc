@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import GlobalStyle from '../../global-styles';
 import Test from '../../components/Test';
+import Abc from '../../components/Abc';
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -34,7 +35,8 @@ export default function App() {
       </Helmet>
       <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Test />} />
+            <Route exact path="/" element={<Abc />} />
+            <Route path="/apps" element={<Test />} />
           </Routes>
         </BrowserRouter>
       <GlobalStyle />
