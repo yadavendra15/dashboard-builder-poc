@@ -122,14 +122,14 @@ function AddWidget({ type }) {
                 <label>Data to be shown : </label>
                 <select id="dynamicWidgetData" ref={apiSelectBox}>
                     <option value=''>--Select API--</option>
-                    {(widgetType !== 'TableWidget' && widgetType !== "CardWidget") &&
+                    {(widgetType !== 'TableWidget' && widgetType !== "CardWidget" && widgetType !== "NewBarChart") &&
                         <>
                             <option value="https://app-simulator.apps83.com/productData">Product Price Data</option>
                             <option value="https://app-simulator.apps83.com/countryData">Country Litre Data</option>
                             <option value="https://app-simulator.apps83.com/currencyData">Currency Amount Data</option>
                         </>
                     }
-                    {widgetType === 'TableWidget' && widgetType !== 'CardWidget' &&
+                    {widgetType === 'TableWidget' && widgetType !== 'CardWidget' && widgetType !== "NewBarChart" &&
                         <>
                             <option value="https://app-simulator.apps83.com/usersData">User Details 40 records</option>
                             <option value="https://app-simulator.apps83.com/cityData">City Details records</option>
@@ -137,8 +137,12 @@ function AddWidget({ type }) {
                         </>
                     }
                     {
-                        widgetType === 'CardWidget' &&
+                        widgetType === 'CardWidget' && widgetType !== "NewBarChart" &&
                         <option value="https://app-simulator.apps83.com/cardWidgetData">Card Widget Data</option>
+                    }
+                    {
+                        widgetType === "NewBarChart" && 
+                        <option value ="https://app-simulator.apps83.com/barChartConfig">Bar Chart Data</option>
                     }
                 </select>
             </div>
@@ -161,7 +165,7 @@ function AddWidget({ type }) {
         {widgetType === 'XYLineChart' && <XYLineChart data={widgetData} chartid={uid()} />}
         {widgetType === 'TableWidget' && <TableWidget data={widgetData} selectedColumn={selectedColumn} actionSelected={(e) => actionSelected(e)} changeRouteURL={(e) => changeRouteURL(e)} />}
         {widgetType === 'CardWidget' && <CardWidget data={widgetData} />}
-        {widgetType === 'NewBarChart' && <NewBarChart data={widgetData} chartid={uid()} />}
+        {widgetType === 'NewBarChart' && <NewBarChart response={widgetData} />}
     </>
     )
 }
